@@ -17,6 +17,4 @@ const NAV_LINKS =[
     },
 ]
 
-export {
-    NAV_LINKS
-}
+export {NAV_LINKS}

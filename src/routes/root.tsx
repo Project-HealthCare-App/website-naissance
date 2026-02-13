@@ -23,6 +23,10 @@ const router = createBrowserRouter([
                         path: "declarations",
                         element: <Declarations />,
                     },
+                    {
+                        path: "requests",
+                        element: <Declarations />,
+                    },
                 ],
             },
         ],
