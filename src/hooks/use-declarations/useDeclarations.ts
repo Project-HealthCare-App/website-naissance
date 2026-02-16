@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 function useDeclarations () {
     const [statusOrder, setStatusOrder] = useState(1);
+    const [dateOrder, setDateOrder] = useState(1);
     const [declarations, setDeclarations] = useState<Declaration[]>([]);
     const sortByStatus = () => {
      const sortedDeclarations = declarations.sort((itemOne: Declaration, itemTwo: Declaration) => {
@@ -20,6 +21,18 @@ function useDeclarations () {
         });
         setDeclarations([...sortedDeclarations]);
     };
+
+    const sortByDate = () => {
+     const sortedDeclarations = declarations.sort(({registered: itemOneDate}: Declaration, {registered: itemTwoDate}: Declaration) => {
+            const jsDateOne = itemOneDate.split(" ")[0];
+            const jsDateTwo = itemTwoDate.split(" ")[0];
+            let result =new Date(jsDateOne).getTime() - new Date(jsDateTwo).getTime();
+            setDateOrder(dateOrder * -1);
+            return result * dateOrder;
+        });
+        setDeclarations([...sortedDeclarations]);
+    };
+
     const getDeclaration = async () => {
         const data = await search("declarations");
         setDeclarations(data);
@@ -28,7 +41,7 @@ function useDeclarations () {
         getDeclaration();
     }, []);
 
-    return { declarations, sortByStatus };
+    return { declarations, sortByStatus, sortByDate };
 }
 
 export { useDeclarations }
