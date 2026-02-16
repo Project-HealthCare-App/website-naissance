@@ -1,4 +1,4 @@
-import { useDeclarations, useDemandes } from "@/hooks";
+import { useDeclarations } from "@/hooks";
 import DeclarationsItems from "@/components/declarations/DeclarationsItems";
 
 function Declarations() {
