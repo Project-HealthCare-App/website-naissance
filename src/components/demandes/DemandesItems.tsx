@@ -1,12 +1,14 @@
 import type { Request } from "../../types/Request";
 import DemandeItem from "./DemandeItem";
+import { BiSort } from "react-icons/bi";
 
 type Props = {
     demandes: Request[];
+    sortByStatus: () => void;
 };
 
 function DemandesItems(props: Props) {
-    const { demandes } = props;
+    const { demandes, sortByStatus } = props;
     return (
         <>
             <article className="grid grid-cols-11 items-center font-bold text-sm italic" >
@@ -15,8 +17,14 @@ function DemandesItems(props: Props) {
                 <span className={` p-2`}>Date de Naiss.</span>
                 <span className={` p-2 col-span-2`} >Parent</span>
                 <span className={` p-2 col-span-2`} >Adresse</span>
-                <span className={` p-2 text-center`}>Statut</span>
-                <span className={` p-2 col-span-2 text-center`}>ACTIONS</span>
+                <button
+                    type="button"
+                    className={` p-2 text-center flex justify-between items-center`}
+                    onClick={() => sortByStatus()}>
+                    Statut
+                    <BiSort />
+                </button>
+                <span className={` p-2 col-span-2 text-center`}>Actions</span>
             </article>
             {
                 demandes.map((item: Request, index: number) => (
