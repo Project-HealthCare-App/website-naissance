@@ -13,7 +13,7 @@ function DemandeItem(props: Props) {
     return (
         <>
             <article
-                className={`grid grid-cols-12 border-t border-gray-200 text-sm col-span-2 items-center ${index % 2 === 0 ? 'bg-gray-100' : null}`}
+                className={`grid grid-cols-11 border-t border-gray-200 text-sm items-center ${index % 2 === 0 ? 'bg-gray-100' : null}`}
             >
                 <span className={` p-2`}>{formatDate(item.registered)}</span>
                 <span className={` p-2 col-span-2 flex flex-col`}>

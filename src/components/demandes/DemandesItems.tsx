@@ -9,7 +9,7 @@ function DemandesItems(props: Props) {
     const { demandes } = props;
     return (
         <>
-            <article className="grid grid-cols-12 items-center font-bold text-sm italic" >
+            <article className="grid grid-cols-11 items-center font-bold text-sm italic" >
                 <span className={` p-2`}>Date</span>
                 <span className={` p-2 col-span-2`} >Enfant</span>
                 <span className={` p-2`}>Date de Naiss.</span>
