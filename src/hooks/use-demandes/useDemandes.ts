@@ -1,11 +1,13 @@
 import { search } from "@/services";
 import type { Request } from "@/types/Request";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function useDemandes () {
+    const filterRef = useRef<any>(null);
     const [statusOrder, setStatusOrder] = useState(1);
     const [dateOrder, setDateOrder] = useState(1);
     const [demandes, setDemandes] = useState<Request[]>([]);
+    const [filteredDemandes, setFilteredDemandes] = useState<Request[]>([]);
         const sortByStatus = () => {
          const sortedDemandes = demandes.sort((itemOne: Request, itemTwo: Request) => {
                 const {status: itemOneStatus} = itemOne;
@@ -32,7 +34,23 @@ function useDemandes () {
                 });
                 setDemandes([...sortedDemandes]);
             };
+            
         
+    const filterDemandes = () => {
+        const filter = filterRef.current.value.toLowerCase() || "";
+        if (filter.length >= 2) {
+           const filteredDemandes = demandes.filter(item =>{
+                const {child: {firstName, lastName}} = item;
+                return ( 
+                    firstName.toLowerCase().indexOf(filter.toLowerCase()) > -1 
+                || lastName.toLowerCase().includes(filter.toLowerCase()))
+            });
+            setFilteredDemandes([...filteredDemandes]);
+        } else {
+            setFilteredDemandes([...demandes]);
+        }
+    };
+
     const getDemandes = async () => {
         const data = await search("requests");
         setDemandes(data);
@@ -42,7 +60,7 @@ function useDemandes () {
         getDemandes();
     }, []);
 
-    return { demandes, sortByStatus, sortByDate };
+    return { demandes, filteredDemandes, sortByStatus, sortByDate, filterRef, filterDemandes };
 }
 
 export { useDemandes }
