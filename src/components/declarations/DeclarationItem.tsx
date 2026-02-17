@@ -40,4 +40,4 @@ function DeclarationItem({ declaration: item, index }: Props) {
     )
 }
 
-export default DeclarationItem
+export default DeclarationItem 
