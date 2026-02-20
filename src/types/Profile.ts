@@ -4,5 +4,6 @@ export type Profile ={
     lastName : string,
     eyeColor?: string,
     birthDate?: string,
-    address? : string
+    address? : string,
+    birthTime?: string,
 }
