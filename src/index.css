@@ -33,7 +33,7 @@ button[type='submit'] {
     select,
     select[multiple],
     textarea {
-        @apply border w-full rounded-md border-gray-500 focus:border-indigo-500 h-8 p-2;
+        @apply border w-full rounded-md border-gray-500 focus:border-indigo-500 h-10 p-2;
     }
 
 
