@@ -12,7 +12,7 @@ function Demandes() {
                     ref={filterRef}
                     onKeyUp={filterDemandes}
                 />
-                <Link to={"/private/demandes/new"}
+                <Link to={"/private/requests/new"}
                     className=" bg-green-600 rounded-md block px-3 py-2 text-white">
                     Nouvelle demande
                 </Link>

@@ -6,6 +6,7 @@ import ErrorPage from "../ErrorPage";
 import Home from "../pages/Home";
 import Demandes from "../pages/Demandes";
 import DeclarationEdit from "../pages/DeclarationEdit";
+import DemandeEdit from "../pages/DemandeEdit";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
                     {
                         path: "declarations/new",
                         element: <DeclarationEdit />,
+                    },
+                    {
+                        path: "requests/new",
+                        element: <DemandeEdit />,
                     },
                 ],
             },
