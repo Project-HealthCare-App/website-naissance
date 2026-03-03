@@ -1,15 +1,30 @@
-type Props = {
-    classes: string;
-    children: React.ReactElement;
-    action: () => null;
-};
-function ActionButton({ classes, children, action }: Props) {
-    return (
-        <button type="button" className={`text-center p-2 ${classes}`} onClick={action}>
-            {children}
-        </button>
+import { STATUS } from "../../utils";
+import { getStatusLabel } from "../../utils";
 
-    )
+type Props = {
+    id: string;
+    classes: string;
+    children?: React.ReactElement;
+    action: (data: { id: string, status: string }) => void;
+};
+function ActionButton({ id, classes, action }: Props) {
+    return (
+        <div className={`${classes}`}>
+            <select
+                onChange={(event) => {
+                    const status = event.target.value;
+                    action({ id, status });
+                }}
+            >
+                <option value="">Sélectionner</option>
+                {STATUS.map((item: string) =>
+                    <option key={`${id}-${item}`} value={item}>
+                        {getStatusLabel(item)}
+                    </option>
+                )}
+            </select>
+        </div>
+    );
 }
 
 export default ActionButton; 

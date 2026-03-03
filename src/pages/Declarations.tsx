@@ -3,7 +3,13 @@ import DeclarationsItems from "@/components/declarations/DeclarationsItems";
 import { Link } from "react-router-dom";
 
 function Declarations() {
-    const { filterRef, declarations, filteredDeclarations, sortByStatus, sortByDate, filterDeclarations } = useDeclarations();
+    const { filterRef,
+        filteredDeclarations,
+        declarations,
+        sortByStatus,
+        sortByDate,
+        filterDeclarations,
+        updateStatus } = useDeclarations();
     return (
         <>
             <div className=" bg-white shadow-md rounded-md mb-3 flex items-center justify-between py-3 px-3">
@@ -19,8 +25,8 @@ function Declarations() {
             </div >
             <div className="border border-gray-200 bg-white shadow-md rounded-md">
                 <DeclarationsItems
-                    declarations={
-                        filteredDeclarations.length ? filteredDeclarations : declarations}
+                    declarations={filteredDeclarations && filteredDeclarations.length ? filteredDeclarations : declarations}
+                    updateStatus={updateStatus}
                     sortByStatus={sortByStatus}
                     sortByDate={sortByDate}
                 />

@@ -13,8 +13,6 @@ const getStatusColor = (status: string) => {
     }
 }
 
-
-
 const getStatusLabel = (status: string) => {
     switch (status) {
         case "NEW":
@@ -30,4 +28,5 @@ const getStatusLabel = (status: string) => {
     }
 }
 
-export {getStatusColor, getStatusLabel};
+const STATUS = ["NEW", "ON_GOING", "VALIDATED", "REJECTED"];
+export {getStatusColor, getStatusLabel, STATUS};

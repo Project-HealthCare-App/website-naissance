@@ -29,8 +29,8 @@ function DemandeItem(props: Props) {
                     <span >{item.Parent.address}</span>
                 </span>
                 <StatusBadge status={item.status} />
-                <ActionButton classes="p-2 col-span-2" action={() => null}>
-                    <span>Action</span>
+                <ActionButton classes="m-2 p-2 col-span-2" action={() => null}>
+
                 </ActionButton>
             </article>
         </>

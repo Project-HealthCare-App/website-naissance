@@ -1,11 +1,13 @@
 import { Outlet } from "react-router"
+import ApplicationContextProvider from "./context/ApplicationContextProvider"
 
 function App() {
   return (
-    <main className="bg-gray-200 min-h-screen">
-      <Outlet />
-
-    </main>
+    <ApplicationContextProvider>
+      <main className="bg-gray-200 min-h-screen">
+        <Outlet />
+      </main>
+    </ApplicationContextProvider>
   )
 }
 
