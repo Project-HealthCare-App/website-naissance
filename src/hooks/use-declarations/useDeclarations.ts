@@ -17,13 +17,13 @@ function useDeclarations () {
         setFilteredDeclarations(state.declarations);
     }, [state.declarations]);
 
-    const updateStatusWithoutContext = (data: { id: string, status: string }) => {
+    /*const updateStatusWithoutContext = (data: { id: string, status: string }) => {
         const toUpdate = declarations.filter(({id}: Declaration) => id === data.id)[0];
         const updated = {...toUpdate, status: data.status};
 
         const toKeep = declarations.filter(({id}: Declaration) => id !== data.id);
         setDeclarations([...toKeep, updated]);
-    };
+    };*/
 
     const updateStatus = (data: { id: string, status: string }) => updateDeclarationStatus(data);
 
