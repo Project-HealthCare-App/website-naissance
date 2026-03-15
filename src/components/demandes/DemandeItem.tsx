@@ -6,10 +6,10 @@ import type { Request } from "@/types/Request";
 type Props = {
     demande: Request;
     index: number;
+    action: (data: { id: string, status: string }) => void;
 };
 
-function DemandeItem(props: Props) {
-    const { demande: item, index } = props;
+function DemandeItem({ demande: item, index, action }: Props) {
     return (
         <>
             <article
@@ -29,9 +29,11 @@ function DemandeItem(props: Props) {
                     <span >{item.Parent.address}</span>
                 </span>
                 <StatusBadge status={item.status} />
-                <ActionButton classes="m-2 p-2 col-span-2" action={() => null}>
+                <ActionButton classes="m-2 p-2 col-span-2" action={action}
+                    id={`${item.id}`}>
 
                 </ActionButton>
+
             </article>
         </>
     )

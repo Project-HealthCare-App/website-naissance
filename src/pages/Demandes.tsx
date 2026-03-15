@@ -3,7 +3,13 @@ import { useDemandes } from "@/hooks";
 import { Link } from "react-router-dom";
 
 function Demandes() {
-    const { demandes, filteredDemandes, sortByStatus, sortByDate, filterRef, filterDemandes } = useDemandes();
+    const { demandes,
+        filteredDemandes,
+        sortByStatus,
+        sortByDate,
+        filterRef,
+        filterDemandes,
+        updateStatus } = useDemandes();
     return (
         <>
             <div className=" bg-white shadow-md rounded-md mb-3 flex items-center justify-between py-3 px-3">
@@ -21,7 +27,8 @@ function Demandes() {
             <div className="border border-gray-200 bg-white shadow-md rounded-md">
                 <DemandesItems
                     demandes={
-                        filteredDemandes.length ? filteredDemandes : demandes}
+                        filteredDemandes && filteredDemandes.length ? filteredDemandes : demandes}
+                    updateStatus={updateStatus}
                     sortByStatus={sortByStatus}
                     sortByDate={sortByDate}
                 />

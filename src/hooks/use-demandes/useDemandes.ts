@@ -1,13 +1,35 @@
+import { ApplicationContext } from "@/context/ApplicationContextProvider";
 import { search } from "@/services";
 import type { Request } from "@/types/Request";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 
 function useDemandes () {
+    const {state, updateRequest, updateRequestStatus} = useContext(ApplicationContext); 
+    const {requests: stateDemandes} = state || {demandes : []};     
     const filterRef = useRef<any>(null);
     const [statusOrder, setStatusOrder] = useState(1);
     const [dateOrder, setDateOrder] = useState(1);
     const [demandes, setDemandes] = useState<Request[]>([]);
-    const [filteredDemandes, setFilteredDemandes] = useState<Request[]>([]);
+    const [filteredDemandes, setFilteredDemandes] = useState<Request[]>(stateDemandes as []);
+
+
+    // Synchroniser les déclarations locales avec celles du contexte
+    /*useEffect(() => {
+        setDemandes(stateDemandes as []); 
+        setFilteredDemandes(stateDemandes as []);
+    }, [stateDemandes]);*/
+
+    /*const updateStatusWithoutContext = (data: { id: string, status: string }) => {
+        const toUpdate = demandes.filter(({id}: Request) => id === data.id)[0];
+        const updated = {...toUpdate, status: data.status};
+
+        const toKeep = demandes.filter(({id}: Request) => id !== data.id);
+        setDemandes([...toKeep, updated]);
+    };*/
+
+    const updateStatus = (data: { id: string, status: string }) => updateRequestStatus(data);
+
+
         const sortByStatus = () => {
          const sortedDemandes = demandes.sort((itemOne: Request, itemTwo: Request) => {
                 const {status: itemOneStatus} = itemOne;
@@ -54,13 +76,13 @@ function useDemandes () {
     const getDemandes = async () => {
         const data = await search("requests");
         setDemandes(data);
-
+        updateRequest(data);
     }
     useEffect(() => {
         getDemandes();
     }, []);
 
-    return { demandes, filteredDemandes, sortByStatus, sortByDate, filterRef, filterDemandes };
+    return { demandes, filteredDemandes, sortByStatus, sortByDate, filterRef, filterDemandes, updateStatus };
 }
 
 export { useDemandes }

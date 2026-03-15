@@ -195,7 +195,6 @@ function DemandeEdit() {
                         </div>
 
                         <button type="submit">Enregistrer</button>
-                        <pre>{JSON.stringify(errors, null, 2)}</pre>
 
                     </form>
                 </>

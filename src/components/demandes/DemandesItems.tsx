@@ -6,10 +6,11 @@ type Props = {
     demandes: Request[];
     sortByStatus: () => void;
     sortByDate: () => void;
+    updateStatus: (props: any) => void;
 };
 
 function DemandesItems(props: Props) {
-    const { demandes, sortByStatus, sortByDate } = props;
+    const { demandes, sortByStatus, sortByDate, updateStatus } = props;
     return (
         <>
             <article className="grid grid-cols-11 items-center font-bold text-sm italic" >
@@ -34,9 +35,15 @@ function DemandesItems(props: Props) {
                 <span className={` p-2 col-span-2 text-center`}>Actions</span>
             </article>
             {
-                demandes.map((item: Request, index: number) => (
-                    <DemandeItem key={item.id} demande={item} index={index} />
-                ))
+                demandes && demandes.length ? (
+                    <>
+                        {
+                            demandes.map((item: Request, index: number) => (
+                                <DemandeItem action={updateStatus} key={item.id} demande={item} index={index} />
+                            ))
+                        }
+                    </>
+                ) : null
             }
         </>
     )

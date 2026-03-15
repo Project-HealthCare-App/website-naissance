@@ -1,17 +1,19 @@
 import type { Declaration } from '@/types/Declaration'
-import { INITIAL_STATE, UPDATE_DECLARATION_STATUS, UPDATE_DECLARATIONS } from '@/utils/data';
+import { INITIAL_STATE, UPDATE_DECLARATION_STATUS, UPDATE_DECLARATIONS, UPDATE_REQUEST_STATUS, UPDATE_REQUESTS } from '@/utils/data';
 import React, { useReducer } from 'react'
 import { ApplicationReducer } from './ApplicationReducer';
 
 type StateData = {
     declarations: Declaration[];
+    requests: Request[];
 }
 type Props = {
     state: StateData;
     updateDeclaration: (declarations: Declaration[]) => void;
-    updateRequest?: (declarations: Declaration[]) => void;
+    updateRequest: (requests: Request[]) => void;
 
     updateDeclarationStatus: ({ id, status }: { id: string, status: string }) => void;
+    updateRequestStatus: ({ id, status }: { id: string, status: string }) => void;
 }
 
 //Créer le contexte pour stocker les données de la déclaration et les rendre accessibles
@@ -30,8 +32,16 @@ function ApplicationContextProvider({ children }: any) {
         id, status }: { id: string, status: string }) => {
         dispatch({ type: UPDATE_DECLARATION_STATUS, data: { id, status } });
     }
+
+    const updateRequest = (requests: Request[]) => {
+        dispatch({ type: UPDATE_REQUESTS, data: requests });
+    }
+    const updateRequestStatus = ({
+        id, status }: { id: string, status: string }) => {
+        dispatch({ type: UPDATE_REQUEST_STATUS, data: { id, status } });
+    }
     return (
-        <ApplicationContext.Provider value={{ state, updateDeclaration, updateDeclarationStatus }}>
+        <ApplicationContext.Provider value={{ state, updateDeclaration, updateDeclarationStatus, updateRequest, updateRequestStatus }}>
             {children}
         </ApplicationContext.Provider>
     )
