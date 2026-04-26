@@ -1,9 +1,8 @@
-const host = "http://localhost:8080";
 
 {/* Methode GET pour reception des données du serveur bouchon */}
 const search = async (url: string) => {
   const response = await fetch(
-    `${host}/${url}`,
+    `/api/${url}`,
      {
         headers: {'accept': 'application/json'}
     }
@@ -16,7 +15,7 @@ const search = async (url: string) => {
 
 const create = async (url: string, body: any) => {
   const response = await fetch(
-    `${host}/${url}`,
+    `/api/${url}`,
      {
         headers: {'accept': 'application/json', 'Content-Type': 'application/json'},
         method: 'POST',

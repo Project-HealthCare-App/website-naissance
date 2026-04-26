@@ -14,10 +14,10 @@ function useDemandes () {
 
 
     // Synchroniser les déclarations locales avec celles du contexte
-    /*useEffect(() => {
+    useEffect(() => {
         setDemandes(stateDemandes as []); 
         setFilteredDemandes(stateDemandes as []);
-    }, [stateDemandes]);*/
+    }, [stateDemandes]);
 
     /*const updateStatusWithoutContext = (data: { id: string, status: string }) => {
         const toUpdate = demandes.filter(({id}: Request) => id === data.id)[0];

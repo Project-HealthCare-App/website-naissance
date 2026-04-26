@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
 import PrivateLayout from "../layouts/PrivateLayout";
-import Declarations from "../pages/Declarations";
+import Declarations from "../pages/declarations/Declarations";
 import ErrorPage from "../ErrorPage";
-import Home from "../pages/Home";
-import Demandes from "../pages/Demandes";
-import DeclarationEdit from "../pages/DeclarationEdit";
-import DemandeEdit from "../pages/DemandeEdit";
+import Demandes from "../pages/demandes/Demandes";
+import DeclarationEdit from "../pages/declarations/DeclarationEdit";
+import DemandeEdit from "../pages/demandes/DemandeEdit";
+import { Navigate } from "react-router-dom";
+import PublicLayout from "../layouts/PublicLayout";
+import Login from "../pages/account/Login";
 
 const router = createBrowserRouter([
     {
@@ -15,27 +17,41 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                index: true,
-                element: <Home />,
+                path: "/",
+                element: <PublicLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <Navigate to={"/connexion"} />,
+                    },
+                    {
+                        path: "/connexion",
+                        element: <Login />,
+                    },
+                ],
             },
             {
                 path: "private",
                 element: <PrivateLayout />,
                 children: [
                     {
+                        index: true,
+                        element: <Navigate to={"/private/declarations"} />,
+                    },
+                    {
                         path: "declarations",
                         element: <Declarations />,
                     },
                     {
-                        path: "requests",
-                        element: <Demandes />,
-                    },
-                    {
-                        path: "declarations/new",
+                        path: "declarations/nouvelle-declaration",
                         element: <DeclarationEdit />,
                     },
                     {
-                        path: "requests/new",
+                        path: "demandes",
+                        element: <Demandes />,
+                    },
+                    {
+                        path: "demandes/nouvelle-demande",
                         element: <DemandeEdit />,
                     },
                 ],
