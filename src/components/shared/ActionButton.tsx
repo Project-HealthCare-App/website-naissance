@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { STATUS } from "../../utils";
 import { getStatusLabel } from "../../utils";
+import { GlobalApplicationContext } from "@/context/global/GlobalApplicationContextProvider";
 
 type Props = {
     id: string;
@@ -8,6 +10,10 @@ type Props = {
     action: (data: { id: string, status: string }) => void;
 };
 function ActionButton({ id, classes, action }: Props) {
+    const {
+        state: { user: { role = "" } = {} },
+    } = useContext(GlobalApplicationContext);
+
     return (
         <div className={`${classes}`}>
             <select
@@ -17,7 +23,7 @@ function ActionButton({ id, classes, action }: Props) {
                 }}
             >
                 <option value="">Sélectionner</option>
-                {STATUS.map((item: string) =>
+                {STATUS[role as "PUBLIC" | "AGENT" | "ADMINISTRATOR"].map((item: string) =>
                     <option key={`${id}-${item}`} value={item}>
                         {getStatusLabel(item)}
                     </option>

@@ -19,13 +19,6 @@ function useDemandes () {
         setFilteredDemandes(stateDemandes as []);
     }, [stateDemandes]);
 
-    /*const updateStatusWithoutContext = (data: { id: string, status: string }) => {
-        const toUpdate = demandes.filter(({id}: Request) => id === data.id)[0];
-        const updated = {...toUpdate, status: data.status};
-
-        const toKeep = demandes.filter(({id}: Request) => id !== data.id);
-        setDemandes([...toKeep, updated]);
-    };*/
 
     const updateStatus = (data: { id: string, status: string }) => updateRequestStatus(data);
 

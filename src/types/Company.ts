@@ -1,4 +1,6 @@
+import type { Address } from "./Address"
+
    export type Company = {
       name: string,
-      address: string
+      address: Address
     }

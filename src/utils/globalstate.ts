@@ -1,0 +1,39 @@
+const APPLICATION_STATE = {
+    title: "Titre par défaut",
+    requests: [],
+    declarations: [],
+  }
+const APPLICATION_STATE_KEY = "application-state-key";
+const SET_REQUESTS= "SET_REQUESTS";
+const SET_REQUEST_STATUS= "SET_REQUEST_STATUS";
+const UPDATE_TITLE  = "UPDATE_TITLE";
+const FILTER_REQUESTS  = "FILTER_REQUESTS";
+const SET_TOKEN = "SET_TOKEN";
+const DELETE_TOKEN = "DELETE_TOKEN";
+const LOGOUT = "LOGOUT";
+const SET_CURRENT_USER = "SET_CURRENT_USER";
+const UPDATE_DECLARATIONS = "UPDATE_DECLARATIONS";
+const INITIAL_STATE = {
+    requests: [],
+    currentUser: null,
+    token: null,
+    declarations: [],
+    title: "Titre par défaut",
+    requestFilter: null,
+};
+
+export {
+    APPLICATION_STATE,
+    APPLICATION_STATE_KEY,
+    DELETE_TOKEN,
+    FILTER_REQUESTS,
+    SET_REQUESTS,
+    SET_REQUEST_STATUS,
+    SET_TOKEN,
+    UPDATE_TITLE,
+    LOGOUT,
+    SET_CURRENT_USER,
+    UPDATE_DECLARATIONS,
+    INITIAL_STATE
+    
+}

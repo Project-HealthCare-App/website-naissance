@@ -1,6 +1,6 @@
 import type { Declaration } from '@/types/Declaration'
 import { INITIAL_STATE, UPDATE_DECLARATION_STATUS, UPDATE_DECLARATIONS, UPDATE_REQUEST_STATUS, UPDATE_REQUESTS } from '@/utils/data';
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { ApplicationReducer } from './ApplicationReducer';
 
 type StateData = {
@@ -27,19 +27,23 @@ function ApplicationContextProvider({ children }: any) {
     const [state, dispatch] = useReducer(ApplicationReducer, INITIAL_STATE);
     const updateDeclaration = (declarations: Declaration[]) => {
         dispatch({ type: UPDATE_DECLARATIONS, data: declarations });
-    }
+    };
     const updateDeclarationStatus = ({
         id, status }: { id: string, status: string }) => {
         dispatch({ type: UPDATE_DECLARATION_STATUS, data: { id, status } });
-    }
+    };
 
     const updateRequest = (requests: Request[]) => {
         dispatch({ type: UPDATE_REQUESTS, data: requests });
-    }
+    };
     const updateRequestStatus = ({
         id, status }: { id: string, status: string }) => {
         dispatch({ type: UPDATE_REQUEST_STATUS, data: { id, status } });
-    }
+    };
+    useEffect(() => {
+        dispatch({});
+    }, []);
+
     return (
         <ApplicationContext.Provider value={{ state, updateDeclaration, updateDeclarationStatus, updateRequest, updateRequestStatus }}>
             {children}

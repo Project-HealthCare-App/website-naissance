@@ -1,7 +1,10 @@
 import { Link } from "react-router"
 import { NAV_LINKS } from "../../utils"
+import { useContext } from "react"
+import { GlobalApplicationContext } from "@/context/global/GlobalApplicationContextProvider";
 
 function Nav() {
+    const { logout } = useContext(GlobalApplicationContext);
     return (
         <nav className="z-10 bg-white shadow-md w-56 fixed flex flex-col justify-between top-0 left-0 bottom-0">
             <Link to={'/private/declarations'}
@@ -18,7 +21,7 @@ function Nav() {
                 }
 
             </ul >
-            <button type="button" onClick={() => null} className="bg-red-700  rounded-sm text-white hover:text-red-700 py-2 font-bold hover:border hover:border-red-700 hover:bg-white">
+            <button type="button" onClick={logout} className="bg-red-700  rounded-sm text-white hover:text-red-700 py-2 font-bold hover:border hover:border-red-700 hover:bg-white">
                 Déconnexion
             </button>
         </nav >

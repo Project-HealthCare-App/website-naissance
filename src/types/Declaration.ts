@@ -5,11 +5,11 @@ import type { Profile } from "./Profile"
    export type Declaration = { 
     id?: string | number,
     picture?: string,
-    comment?: string,
+    comment: string,
     status: string,
-    registered: string,
+    registered?: string,
     company: Company,
     child: Child,
-    firstParent: Profile,
+    firstParent?: Profile,
     secondParent: Profile
      }

@@ -1,31 +1,38 @@
-import { ApplicationContext } from "@/context/ApplicationContextProvider";
-import { search } from "@/services";
+import { GlobalApplicationContext } from "@/context/global/GlobalApplicationContextProvider";
+import { partialUpdate, search } from "@/services";
 import type { Declaration } from "@/types/Declaration";
 import { useEffect, useState, useRef, useContext } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 function useDeclarations () {
-    const {state, updateDeclaration, updateDeclarationStatus} = useContext(ApplicationContext);
+  const queryClient = useQueryClient();
+    const {updateTitle, state: {token}} = useContext(GlobalApplicationContext);
+
+    const {data} = useQuery({ 
+        queryKey: ['declarations'], 
+        queryFn: () => search({path: "declarations", token}),
+        retry:2
+
+    });
+
+    const partialUpdateMutation = useMutation({ 
+    mutationFn: ({path, data}: any) => partialUpdate({path, token, body: data}),
+    onSettled: () =>{
+      queryClient.invalidateQueries({queryKey:  ['declarations']})
+    }
+    });
+
+    const {state, updateDeclarations} = useContext(GlobalApplicationContext);
     const filterRef = useRef<any>(null);
     const [statusOrder, setStatusOrder] = useState(1);
     const [dateOrder, setDateOrder] = useState(1);
-    const [declarations, setDeclarations] = useState<Declaration[]>([]);
-    const [filteredDeclarations, setFilteredDeclarations] = useState<Declaration[]>(state.declarations);
+    const [declarations, setDeclarations] = useState<Declaration[]>(state.declarations);
+    const [filteredDeclarations, setFilteredDeclarations] = useState<Declaration[]>([]);
 
-    // Synchroniser les déclarations locales avec celles du contexte
-    useEffect(() => {
-        setDeclarations(state.declarations);
-        setFilteredDeclarations(state.declarations);
-    }, [state.declarations]);
 
-    /*const updateStatusWithoutContext = (data: { id: string, status: string }) => {
-        const toUpdate = declarations.filter(({id}: Declaration) => id === data.id)[0];
-        const updated = {...toUpdate, status: data.status};
-
-        const toKeep = declarations.filter(({id}: Declaration) => id !== data.id);
-        setDeclarations([...toKeep, updated]);
-    };*/
-
-    const updateStatus = (data: { id: string, status: string }) => updateDeclarationStatus(data);
+    const updateStatus = (data: { id: string, status: string }) => {
+        partialUpdateMutation.mutate({path: `declarations/${data.id}/status`, data})
+    };
 
     const sortByStatus = () => {
      const sortedDeclarations = declarations.sort((itemOne: Declaration, itemTwo: Declaration) => {
@@ -43,42 +50,50 @@ function useDeclarations () {
         setDeclarations([...sortedDeclarations]);
     };
 
-    const sortByDate = () => {
-     const sortedDeclarations = declarations.sort(({registered: itemOneDate}: Declaration, {registered: itemTwoDate}: Declaration) => {
-            const jsDateOne = itemOneDate.split(" ")[0];
-            const jsDateTwo = itemTwoDate.split(" ")[0];
-            let result =new Date(jsDateOne).getTime() - new Date(jsDateTwo).getTime();
-            setDateOrder(dateOrder * -1);
-            return result * dateOrder;
-        });
-        setDeclarations([...sortedDeclarations]);
-    };
+  const sortByDate = () => {
+    const sortedDeclarations = declarations.sort(
+      (
+        { registered: itemOneDate = ""}: Declaration,
+        { registered: itemTwoDate = ""}: Declaration
+      ) => {
+        const jsDateOne = itemOneDate.split(" ")[0] ;
+        const jsDateTwo = itemTwoDate.split(" ")[0];
+        const result =
+          new Date(jsDateOne).getTime() - new Date(jsDateTwo).getTime();
+        setDateOrder(dateOrder * -1);
+        return result * dateOrder;
+      }
+    );
+    setDeclarations([...sortedDeclarations]);
+  };
 
 
+  const filterDeclarations = () => {
+    const filter = filterRef.current.value || "";
 
-    const filterDeclarations = () => {
-        const filter = filterRef.current.value.toLowerCase() || "";
-        if (filter.length >= 2) {
-           const filteredDeclarations = declarations.filter(item =>{
-                const {child: {firstName, lastName}} = item;
-                return ( 
-                    firstName.toLowerCase().indexOf(filter.toLowerCase()) > -1 
-                || lastName.toLowerCase().includes(filter.toLowerCase()))
-            });
-            setFilteredDeclarations([...filteredDeclarations]);
-        } else {
-            setFilteredDeclarations([...declarations]);
-        }
-    };
-
-    const getDeclaration = async () => {
-        const data = await search("declarations");
-        setDeclarations(data);
-        updateDeclaration(data);
+    if (filter.length >= 2) {
+      const filteredDeclarations = declarations.filter((item) => {
+        const {
+          child: { firstName, lastName },
+        } = item;
+        return (
+          firstName.toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
+          lastName.toLowerCase().includes(filter.toLowerCase())
+        );
+      });
+      setFilteredDeclarations([...filteredDeclarations]);
+    } else {
+      setFilteredDeclarations([...declarations]);
     }
+  };
+
     useEffect(() => {
-        getDeclaration();
-    }, []);
+        updateTitle({"title":"Déclarations"});        
+        setDeclarations(data);
+        updateDeclarations(data);
+    }, [data]);
+
+    
 
     return { declarations, filteredDeclarations, filterRef, state, sortByStatus, sortByDate, filterDeclarations, updateStatus };
 }
