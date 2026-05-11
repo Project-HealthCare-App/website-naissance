@@ -4,5 +4,6 @@ export type Profile ={
     lastName : string,
     email: string,
     address: string,
-    phone: string
+    phone: string,
+    
 }

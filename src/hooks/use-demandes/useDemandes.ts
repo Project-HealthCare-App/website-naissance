@@ -1,4 +1,5 @@
 import { ApplicationContext } from "@/context/ApplicationContextProvider";
+import { GlobalApplicationContext } from "@/context/global/GlobalApplicationContextProvider";
 import { search } from "@/services";
 import type { Request } from "@/types/Request";
 import { useEffect, useState, useRef, useContext } from "react";
@@ -12,7 +13,13 @@ function useDemandes () {
     const [demandes, setDemandes] = useState<Request[]>([]);
     const [filteredDemandes, setFilteredDemandes] = useState<Request[]>(stateDemandes as []);
 
-
+      const {
+        state: { token },
+        updateTitle,
+      } = useContext(GlobalApplicationContext);
+        useEffect(() => {
+                        updateTitle({ title: "Demandes" });
+                    }, []);
     // Synchroniser les déclarations locales avec celles du contexte
     useEffect(() => {
         setDemandes(stateDemandes as []); 

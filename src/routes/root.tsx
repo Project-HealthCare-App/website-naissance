@@ -9,6 +9,10 @@ import DemandeEdit from "../pages/demandes/DemandeEdit";
 import { Navigate } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import Login from "../pages/account/Login";
+import Profiles from "@/pages/Profiles";
+import Notifications from "@/pages/Notifications";
+import ActivateAccount from "@/pages/account/ActivateAccount";
+import Register from "@/pages/account/Register";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +31,14 @@ const router = createBrowserRouter([
                     {
                         path: "/connexion",
                         element: <Login />,
+                    },
+                    {
+                        path: "/register",
+                        element: <Register />,
+                    },
+                    {
+                        path: "/activate",
+                        element: <ActivateAccount />,
                     },
                 ],
             },
@@ -53,6 +65,14 @@ const router = createBrowserRouter([
                     {
                         path: "demandes/nouvelle-demande",
                         element: <DemandeEdit />,
+                    },
+                    {
+                        path: "profiles",
+                        element: <Profiles />,
+                    },
+                    {
+                        path: "notifications",
+                        element: <Notifications />,
                     },
                 ],
             },

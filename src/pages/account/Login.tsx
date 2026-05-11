@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import type { AxiosResponse } from "axios";
+import { Link } from "react-router-dom";
 
 const REQUIRED_FIELD = "Ce champ est requis";
 type Credentials = {
@@ -52,7 +53,7 @@ function Login() {
                 MES NAISSANCES
             </h1>
             <div className="w-4/5 md:w-3/4 mx-auto">
-                <h1 className="mb-2 text-2xl font-bold">Connectez vous</h1>
+                <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">Connectez vous</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-field">
                         <label htmlFor="email">Email</label>
@@ -76,6 +77,12 @@ function Login() {
                     </div>
                     <button type="submit">Connexion</button>
                 </form>
+                <p className="mt-4 text-center">
+                    Vous n'avez pas de compte ?{" "}
+                    <Link to="/register" className="text-blue-700 font-bold">
+                        Créer un compte
+                    </Link>
+                </p>
             </div>
             <p className="p-4 text-center md:hidden">
                 &copy; {new Date().getFullYear()} chillo.tech

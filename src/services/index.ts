@@ -23,8 +23,7 @@ const create =  async ({url, token,  body}: any) => {
     return await axios({
         method: 'POST',
         url:  `/api/${url}`,
-        data: 
-        body,
+        data: body,
         headers: {
             'accept': 'application/json', 
             'content-type': 'application/json', 
